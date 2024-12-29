@@ -1,0 +1,2 @@
+.env
+node_modules/@aws-sdk/client-sso-oidc/dist-types/commands/CreateTokenWithIAMCommand.d.ts

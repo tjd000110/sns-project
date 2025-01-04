@@ -8,11 +8,11 @@ mainRouter.get('/', checkAuthenticated, (req, res) => {
 });
 
 mainRouter.get('/login', checkNotAuthenticated, (req,res) => { //checkNotAuthenticated => 로그인 안한 사람들만 접속 가능
-    res.render('login');
+    res.render('auth/login');
 });
 
 mainRouter.get('/signup', checkNotAuthenticated, (req,res) => { //checkNotAuthenticated => 로그인 안한 사람들만 접속 가능
-    res.render('signup');
+    res.render('auth/signup');
 });
 
 module.exports = mainRouter;

@@ -20,8 +20,45 @@ const userSchema = mongoose.Schema({
         type: String,
         unique: true, // googleId로 유일한 계정
         sparse: true
-    }
-})
+    },
+    username: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    firstName: {
+        type: String,
+        default: 'First Name',
+    },
+    lastName: {
+        type: String,
+        default: 'Last Name',
+    },
+    bio: {
+      type: String,
+      default: '데이터 없음'
+    },
+    hometown: {
+        type: String,
+        default: '데이터 없음'
+      },
+      workspace: {
+        type: String,
+        default: '데이터 없음'
+      },
+      education: {
+        type: String,
+        default: '데이터 없음'
+      },
+      contact: {
+        type: Number,
+        default: ''
+      },
+      friends: [{type: String}],
+      friendsRequests: [{type: String}],
+}, { timestamps : true }) //자동으로 언제 생성되었는지 확인
+
+
 
 const saltRouncs = 10;
 userSchema.pre('save', function(next){ //저장되기 전, 비밀번호 암호화

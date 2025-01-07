@@ -16,7 +16,7 @@ usersRouter.post('/login',(req,res,next) => {
 
         req.logIn(user, function (err) {
             if(err) {return next(err);}
-            res.redirect('/'); // 성공시 login 페이지에서 메인페이지로 이동
+            res.redirect('/posts'); // 성공시 login 페이지에서 메인페이지로 이동
         })
     })(req,res,next) //미들웨어 안의 미들웨어 실행
 })
@@ -36,7 +36,7 @@ usersRouter.post('/signup', async(req,res) => {
         await user.save();
 
         //이메일 전송
-        sendMail('tjd000110@gmail.com', '최미성', 'welcome');
+        // sendMail('tjd000110@gmail.com', '최미성', 'welcome');
 
         //로그인 성공
         res.redirect('/login'); 
@@ -50,7 +50,7 @@ usersRouter.post('/signup', async(req,res) => {
 //구글 로그인
 usersRouter.get('/google', passport.authenticate('google'));
 usersRouter.get('/google/callback', passport.authenticate('google', {
-    successReturnToOrRedirect: '/',
+    successReturnToOrRedirect: '/posts',
     failureRedirect: '/login'
 }));
 

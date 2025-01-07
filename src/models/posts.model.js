@@ -5,14 +5,14 @@ const postSchema = new mongoose.Schema({
     description: String,
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Commnet",
+        ref: "Comment",
     }],
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
-        usernmae: String
+        username: String
     },
     image: {
         type: String

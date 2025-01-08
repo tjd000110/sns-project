@@ -31,11 +31,14 @@ router.post('/', checkAuthenticated, upload, (req, res, next) => {
             id: req.user._id,
             username: req.user.username
         }
-    }, (err, post) => {
+    }, (err, _) => {
         if(err) {
-            next(err);
+            req.flash('error', '게시글 생성 실패');
+            res.redirect("back");
+            // next(err);
         }else {
-            res.redirect("posts");
+            req.flash('success', '게시글 생성 성공');
+            res.redirect("back");
         }
     })
 })
@@ -52,7 +55,6 @@ router.get('/', checkAuthenticated, (req, res) => {
 
             res.render('posts', {
                 posts: posts,
-                currentUser: req.user
             });
             
         }

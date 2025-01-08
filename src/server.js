@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const User = require('./models/users.model');
 const passport = require('passport');
+const flash = require('connect-flash');
 const cookieSession = require('cookie-session');
 
 const config = require('config');
@@ -14,6 +15,7 @@ const commentsRouter = require('./routes/comments.router');
 const profileRouter = require('./routes/profile.router');
 const likesRouter = require('./routes/likes.router');
 const friendsRouter = require('./routes/friends.router');
+
 
 const serverConfig = config.get('server');
 const port = serverConfig.port;
@@ -49,6 +51,8 @@ require('./config/passport');
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
+app.use(flash());
+
 // view engine setup
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
@@ -65,7 +69,24 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//포스트 업데이트 성공시
+app.get('/send', (req, res) => {
+  req.flash('post success', '게시물이 생성되었습니다.');
+  // req.flash('post failed', '게시물 생성이 실패했습니다.');
+  res.redirect('/receive')
+})
 
+app.get('/receive', (req, res) => {
+  res.send(req.flash('post success')[0]); //connect-flash는 휘발성으로 한벌 생행되면 세션에서 저장값이 사라진다. 
+})
+
+//모든 view에서 성공/실패 메세지 사용 가능
+app.use((req, res, next) => {
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
+  res.locals.currentUser = req.user;
+  next();
+})
 
 app.use('/', mainRouter);
 app.use('/auth', usersRouter);

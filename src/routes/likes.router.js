@@ -32,7 +32,7 @@ router.put('/posts/:id/like', checkAuthenticated, (req, res) => {
                         res.redirect('back');
                     } else {
                         req.flash('success', '좋아요를 눌렀습니다.');
-                        res.redirect('/posts');
+                        res.redirect('back');
                     }
                 })
             }

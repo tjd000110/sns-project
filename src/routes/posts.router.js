@@ -1,5 +1,5 @@
 const express = require('express');
-const { checkAuthenticated } = require('../middlewares/auth');
+const { checkAuthenticated, checkPostOwnerShip } = require('../middlewares/auth');
 const router = express.Router();
 const Post = require('../models/posts.model');
 const Comment = require('../models/comments.model');
@@ -60,6 +60,36 @@ router.get('/', checkAuthenticated, (req, res) => {
         }
     })
     
+})
+
+router.get('/:id/edit', checkPostOwnerShip, (req, res) => {
+    
+    res.render('posts/edit', {
+        post: req.post
+    })
+})
+
+router.put('/:id', checkPostOwnerShip, (req, res) => {
+    Post.findByIdAndUpdate(req.params.id, req.body, (err, post) => {
+        if(err) {
+            req.flash('error', '게시글을 수정하는데 오류가 발생하였습니다.')
+            res.redirect('/posts');
+        } else{
+            req.flash('success', '게시글 수정이 완료되었습니다.');
+            res.redirect('/posts');
+        }
+    })
+})
+
+router.delete('/:id', checkPostOwnerShip, (req, res) => {
+    Post.findByIdAndDelete(req.params.id, (err, post) => {
+        if(err) {
+            req.flash('error', '게시글을 삭제하는데 실패했습니다.');
+        } else{
+            req.flash('success', '게시글이 삭제되었습니다.')
+        }
+        res.redirect('/posts');
+    })
 })
 
 module.exports = router;

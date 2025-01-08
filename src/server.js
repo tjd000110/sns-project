@@ -1,11 +1,12 @@
 const express = require('express');
+const cookieSession = require('cookie-session');
 const { default : mongoose } = require('mongoose');
 const app = express();
 const path = require('path');
 const User = require('./models/users.model');
 const passport = require('passport');
 const flash = require('connect-flash');
-const cookieSession = require('cookie-session');
+const methodOverride = require('method-override');
 
 const config = require('config');
 const mainRouter = require('./routes/main.router');
@@ -52,6 +53,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
 app.use(flash());
+app.use(methodOverride('_method'))
 
 // view engine setup
 app.set('views', path.join(__dirname,'views'));

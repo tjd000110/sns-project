@@ -10,6 +10,51 @@
 </head>
 <body>
 
+    <nav class="navbar navbar-dark bg-dark shadow-sm fixed-top navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand">SNS</a>
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="#navbarToggle">
+                <% if (!currentUser) { %>
+                 
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="/signup" class="nav-link">회원가입</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">로그인</a>
+                        </li>
+                    </ul>
+                    <% }  else { %>
+                    
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="/posts" class="nav-link">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/friends" class="nav-link">Friends</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/profile/<%= currentUser._id %>" class="nav-link"><%= currentUser.username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="/auth/logout" method="POST">
+                            <button type="submit" class="nav-link no-outline">
+                                로그아웃
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <br><br><br>
+
     <div class="container">
         
         <% if (error && error.length > 0) { %>

@@ -51,8 +51,8 @@ const userSchema = mongoose.Schema({
         default: '데이터 없음'
       },
       contact: {
-        type: Number,
-        default: ''
+        type: String,
+        default: '데이터 없음'
       },
       friends: [{type: String}],
       friendsRequests: [{type: String}],
